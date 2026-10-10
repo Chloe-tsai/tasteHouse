@@ -1,9 +1,10 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import MenuCard from './MenuCard.vue'
 import dishSalmon from '../../assets/images/menu/dish-salmon.jpg'
 import dishPrawn from '../../assets/images/menu/dish-prawn.jpg'
 import dishToast from '../../assets/images/menu/dish-toast.jpg'
+
 
 // Menu／Categories (119:140): Pill / Pill Active buttons (Taste House / Button 186:410, 186:414)
 const categories = [
@@ -18,6 +19,23 @@ const categories = [
 const dishes = [
   {
     id: 'salmon',
+    category: 'main',
+    name: '香煎鮭魚・味噌奶油',
+    desc: '以白味噌與焦化奶油收尾，搭配當季蔬菜。',
+    price: 'NT$ 680',
+    src: dishSalmon,
+  },
+  {
+    id: 'salmon-2',
+    category: 'main',
+    name: '香煎鮭魚・味噌奶油',
+    desc: '以白味噌與焦化奶油收尾，搭配當季蔬菜。',
+    price: 'NT$ 680',
+    src: dishSalmon,
+  },
+  {
+    id: 'salmon-3',
+    category: 'main',
     name: '香煎鮭魚・味噌奶油',
     desc: '以白味噌與焦化奶油收尾，搭配當季蔬菜。',
     price: 'NT$ 680',
@@ -25,6 +43,23 @@ const dishes = [
   },
   {
     id: 'prawn',
+    category: 'starter',
+    name: '炭烤海虎蝦・柚香',
+    desc: '炭火封住鮮甜，加入柚子與香草的清爽尾韻。',
+    price: 'NT$ 720',
+    src: dishPrawn,
+  },
+  {
+    id: 'prawn-2',
+    category: 'starter',
+    name: '炭烤海虎蝦・柚香',
+    desc: '炭火封住鮮甜，加入柚子與香草的清爽尾韻。',
+    price: 'NT$ 720',
+    src: dishPrawn,
+  },
+  {
+    id: 'prawn-3',
+    category: 'starter',
     name: '炭烤海虎蝦・柚香',
     desc: '炭火封住鮮甜，加入柚子與香草的清爽尾韻。',
     price: 'NT$ 720',
@@ -32,6 +67,7 @@ const dishes = [
   },
   {
     id: 'toast',
+    category: 'dessert',
     name: '半熟蛋吐司・香料醬',
     desc: '酥脆吐司、柔嫩蛋心與自製香料醬的日常美味。',
     price: 'NT$ 420',
@@ -39,16 +75,25 @@ const dishes = [
   },
   {
     id: 'toast-2',
+    category: 'dessert',
     name: '半熟蛋吐司・香料醬',
     desc: '酥脆吐司、柔嫩蛋心與自製香料醬的日常美味。',
     price: 'NT$ 420',
     src: dishToast,
-    mobileOnly: true,
   },
+  {
+    id: 'toast-3',
+    category: 'dessert',
+    name: '半熟蛋吐司・香料醬',
+    desc: '酥脆吐司、柔嫩蛋心與自製香料醬的日常美味。',
+    price: 'NT$ 420',
+    src: dishToast,
+  },  
 ]
 
 const active = ref(categories[0].key)
 const tabRefs = ref([])
+const filtered = computed(() => dishes.filter((d) => d.category === active.value))
 
 // Arrow-key navigation between tabs
 const onKeydown = (e, i) => {
@@ -92,7 +137,7 @@ const onKeydown = (e, i) => {
     <Transition name="fade" mode="out-in">
       <div id="seasonal-panel" :key="active" class="seasonal__grid" role="tabpanel">
         <MenuCard
-          v-for="dish in dishes"
+          v-for="dish in filtered"
           :key="dish.id"
           :class="{ 'seasonal__card--mobile': dish.mobileOnly }"
           :name="dish.name"

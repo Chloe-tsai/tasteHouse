@@ -48,7 +48,7 @@ const keyword = ref('')
           <a
             :href="link.href"
             class="nav-link"
-            :aria-current="link.key === current ? 'page' : undefined"
+            :aria-current="current === link.key ? 'page' : undefined"
           >
             <span class="nav-link__label">{{ link.label }}</span>
             <span class="nav-link__sub">{{ link.sub }}</span>
@@ -147,11 +147,13 @@ const keyword = ref('')
   font-size: 13px;
   color: var(--c-gray-sub);
 }
-.nav-link:hover {
+.nav-link:hover,
+.nav-link[aria-current="page"] {
   background: var(--c-gray-text);
   border-radius: 10px;
 }
-.nav-link:hover .nav-link__label {
+.nav-link:hover .nav-link__label,
+.nav-link[aria-current="page"] .nav-link__label {
   color: var(--c-white);
 }
 
